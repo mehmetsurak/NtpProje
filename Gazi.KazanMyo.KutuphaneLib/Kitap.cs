@@ -32,10 +32,6 @@ namespace Gazi.KazanMyo.KutuphaneLib
             sayac++;
         }
 
-    
-
-
-
         //public string basimTarihi
         //{
         //    get
@@ -69,7 +65,6 @@ namespace Gazi.KazanMyo.KutuphaneLib
         }
 
     
-
         //public string BasimTarihi { get => basimTarihi; set => basimTarihi = value; } //Property
 
         public string KitapAdi { get => kitapAdi; set => kitapAdi = value; }
@@ -81,14 +76,20 @@ namespace Gazi.KazanMyo.KutuphaneLib
      
         public static void KitapKaydet(Kitap[] kitaplar)
         {
-            FileStream fs = new FileStream("kitaplar.txt", FileMode.Append);
-            StreamWriter sw = new StreamWriter(fs);
-            foreach (var kitap in kitaplar)
+            try
             {
-                sw.Write(kitap.KitapBilgileriGetir());
+                FileStream fs = new FileStream("kitaplar.txt", FileMode.Append);
+                StreamWriter sw = new StreamWriter(fs);
+                foreach (var kitap in kitaplar)
+                {
+                    sw.Write(kitap.KitapBilgileriGetir());
+                }
+                sw.Close();
             }
-            sw.Close();
-
+            catch (Exception)
+            {
+                Console.WriteLine("Hatalı İşlem");
+            }
         }
 
         public static void KitapListele()
@@ -101,8 +102,7 @@ namespace Gazi.KazanMyo.KutuphaneLib
             }
 
         }
-
-        public string KitapBilgileriGetir() => $"BasımTarihi: {this.basimTarihi} Kitap Adı: {this.KitapAdi} Yazar: {this.Yazar} Türü: {this.Turu} \n";
+        public string KitapBilgileriGetir() => $"\nKitap Adı: {this.KitapAdi} Yazar:{this.Yazar} Türü:{this.Turu} Basım Tarihi:{this.basimTarihi}";
     }
 }
 
